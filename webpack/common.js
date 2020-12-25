@@ -1,5 +1,6 @@
 const path = require("path")
 const mode = process.env.NODE_NEV || "development"
+
 module.exports = {
   mode,
   entry: path.resolve(__dirname, "../src/index"),
@@ -10,7 +11,13 @@ module.exports = {
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".json"],
-    modules: [path.resolve(__dirname, "../node_modules")]
+    modules: [path.resolve(__dirname, "../node_modules")],
+    alias: {
+      '@utils': path.resolve(__dirname, '../src/utils/'),
+      '@apis': path.resolve(__dirname, '../src/apis/'),
+      '@actions': path.resolve(__dirname, '../src/actions/'),
+      '@components': path.resolve(__dirname, '../src/components/'),
+    }
   },
 
   module: {
@@ -59,7 +66,9 @@ module.exports = {
           {
             loader: "less-loader", // compiles Less to CSS
             options: {
-              javascriptEnabled: true
+              lessOptions: {
+                javascriptEnabled: true
+              }
             }
           }
         ]

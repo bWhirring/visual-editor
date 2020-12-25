@@ -1,49 +1,39 @@
 import React from "react";
 import { Layout, Button } from "antd";
+import { useDispatch, useSelector } from 'react-redux'
 import CSSModule from "react-css-modules";
-const styles = require("./index.less");
+import { petData } from '../actions/test'
+// const styles = require("./index.less");
 
 const { Header, Footer, Sider, Content } = Layout;
 
-@CSSModule(styles, { allowMultiple: true })
-export default class Index extends React.PureComponent {
-  render() {
-    return (
+export default function Index() {
+  let data = useSelector(data => data)
+  console.log(data,'aa');
+  let dispatch = useDispatch()
+
+  return (
       <>
-        <Button>11</Button>
-        <Layout>
+      <Layout>
+        <Button onClick={dispatch(petData('111'))}>aa</Button>
           <Header>Header</Header>
           <Content>Content</Content>
           <Footer>Footer</Footer>
         </Layout>
-
-        <Layout>
-          <Header>Header</Header>
-          <Layout>
-            <Sider>Sider</Sider>
-            <Content>Content</Content>
-          </Layout>
-          <Footer>Footer</Footer>
-        </Layout>
-
-        <Layout>
-          <Header>Header</Header>
-          <Layout>
-            <Content>Content</Content>
-            <Sider>Sider</Sider>
-          </Layout>
-          <Footer>Footer</Footer>
-        </Layout>
-
-        <Layout>
-          <Sider>Sider</Sider>
-          <Layout>
-            <Header>Header</Header>
-            <Content>Content</Content>
-            <Footer>Footer</Footer>
-          </Layout>
-        </Layout>
       </>
-    );
-  }
 }
+
+// // @CSSModule(styles, { allowMultiple: true })
+// export default class Index extends React.PureComponent {
+//   render() {
+//     return (
+//       <>
+//         <Layout>
+//           <Header>Header</Header>
+//           <Content>Content</Content>
+//           <Footer>Footer</Footer>
+//         </Layout>
+//       </>
+//     );
+//   }
+// }

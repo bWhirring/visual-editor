@@ -1,15 +1,21 @@
-import React from 'react'
-import { Route, BrowserRouter as Router, Switch, HashRouter, Link } from 'react-router-dom';
-import { router } from './routes'
+import React from "react";
+import {
+  Route,
+  BrowserRouter as Router,
+  Switch,
+  HashRouter,
+  Link,
+} from "react-router-dom";
+import { router } from "./routes";
 export default class App extends React.PureComponent {
   render() {
     return (
       <Router>
         <div>
-          <ul>
+          {/* <ul>
             <li><Link to="/">home</Link></li>
             <li><Link to="/login">login</Link></li>
-          </ul>
+          </ul> */}
           <Switch>
             {router.map((route, index) => (
               <Route
@@ -22,6 +28,6 @@ export default class App extends React.PureComponent {
           </Switch>
         </div>
       </Router>
-    )
+    );
   }
 }

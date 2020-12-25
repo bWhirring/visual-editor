@@ -1,0 +1,49 @@
+.content {
+  min-height: calc(100vh - 108px);
+  padding: 20px;
+  display: flex;
+}
+
+.sider-bar {
+  flex: 1;
+  padding: 20px;
+  background: #fff;
+  margin-right: 10px;
+  height: calc(100vh - 148px);
+  overflow: scroll;
+}
+
+.main {
+  cursor: move;
+  flex: 2;
+  background: #fff;
+  // width: 375px;
+
+  height: calc(100vh - 148px);
+
+  overflow: scroll;
+
+  .editor {
+    width: 375px;
+    position: relative;
+    margin: 0 auto;
+  }
+
+  img {
+    width: 100%;
+  }
+}
+
+.property {
+  flex: 1;
+  padding: 0 20px;
+}
+
+.footer {
+  background-color: #fff;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  box-sizing: border-box;
+  padding: 0;
+}
