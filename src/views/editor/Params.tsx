@@ -17,11 +17,16 @@ function Params(props) {
 
   const { currentLayerData, configData } = useSelector((data) => data);
 
-  let { width, height, left, top, zIndex } = currentLayerData;
+  let { width, height, left, top, zIndex, text } = currentLayerData;
 
   useEffect(() => {
     setId((draft) => currentLayerData.id);
-    form.setFieldsValue({ width, height, left, top, zIndex });
+    let { value } = text || {};
+    form.setFieldsValue({ width, height, left, top, zIndex, value });
+
+    return () => {
+      form.resetFields();
+    };
   }, [currentLayerData.id]);
 
   const debounced = useDebouncedCallback(
@@ -38,7 +43,11 @@ function Params(props) {
         if (v.id === id) idx = i;
       });
       let newConfigData = produce(configData, (draft) => {
-        draft[idx][type] = val;
+        if (type === "value") {
+          draft[idx]["text"].value = val;
+        } else {
+          draft[idx][type] = val;
+        }
       });
 
       dispatch(setConfig(newConfigData));
@@ -51,20 +60,24 @@ function Params(props) {
       <FormItem name={v} key={v}>
         <Input
           onChange={(e) => debounced.callback(e.target.value, v)}
-          addonBefore={v}
+          addonBefore={
+            <span style={{ display: "inline-block", width: 60 }}>{v}</span>
+          }
         />
       </FormItem>
     ));
   }, []);
 
   let renderItemList: string[] = ["width", "height", "left", "top", "zIndex"];
-
+  if (text?.value) renderItemList.push("value");
   return (
     <>
       {id ? (
-        <Form form={form}>
-          <Space direction="vertical">{renderFromItem(renderItemList)}</Space>
-        </Form>
+        <>
+          <Form form={form}>
+            <Space direction="vertical">{renderFromItem(renderItemList)}</Space>
+          </Form>
+        </>
       ) : (
         <Empty />
       )}

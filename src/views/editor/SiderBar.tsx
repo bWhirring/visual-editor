@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Button, Menu, Tree } from "antd";
 import { isNotNullObject, layerNameToPinyin, toTree } from "@utils/index";
 import { setConfig } from "@actions/configAction";
+import { setLayerData } from "@actions/layerAction";
 
 import {
   EditOutlined,
@@ -24,12 +25,22 @@ const treeData = [
 
 function SiderBar() {
   let dispatch = useDispatch();
-  let { configData } = useSelector((data) => data);
+  let { configData, currentLayerData } = useSelector((data) => data);
   let nodes = toTree(JSON.parse(JSON.stringify(configData)));
 
-  let selectTree = (e) => {
-    let layer = configData.filter((v) => v.id === e[0]);
-    dispatch(setLayerData(layer[0]));
+  let selectTree = ([id]) => {
+    let element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({
+        block: "center",
+        inline: "center",
+        behavior: "smooth",
+      });
+      if (id !== currentLayerData.id) {
+        let layer = configData.filter((v) => v.id === id);
+        dispatch(setLayerData(layer[0]));
+      }
+    }
   };
 
   return (

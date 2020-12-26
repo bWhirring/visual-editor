@@ -27,7 +27,11 @@ export default function Main(WrappedComponent) {
 
     const render = (children, name = "") => {
       if (name) {
-        return <div className={name}>{render(children)}</div>;
+        return (
+          <div key={name} id={name} className={name}>
+            {render(children)}
+          </div>
+        );
       } else {
         return children.map((child) => {
           let { name, type, text } = child;
@@ -80,10 +84,15 @@ export default function Main(WrappedComponent) {
           value,
           font: { sizes, color },
         } = text;
-        return <div style={{ ...css }}>{value}</div>;
+        return (
+          <div id={id} style={{ ...css }}>
+            {value}
+          </div>
+        );
       } else {
         return (
           <img
+            id={id}
             style={{ ...css }}
             src={`https://yun.dui88.com/taobaomini/psd/test/${name}.png`}
           />
