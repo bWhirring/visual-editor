@@ -1,20 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>拖放示例-文本</title>
   </head>
+  <style>
+    .src {
+      display: flex;
+    }
+
+    .dropabled {
+      flex: 1;
+    }
+
+    .txt {
+      color: green;
+    }
+
+    .img {
+      width: 100px;
+      height: 100px;
+      border: 1px solid gray;
+    }
+
+    .target {
+      width: 200px;
+      height: 200px;
+      line-height: 200px;
+      text-align: center;
+      border: 1px solid gray;
+      color: red;
+    }
+  </style>
+
   <body>
-    <a
-      href="https://babycaremy.tmall.com/shop/view_shop.htm?spm=a230r.7195193.1997079397.2.40311cc9azQtP1"
-      >aaaa</a
-    >
-    <div>
-      <a
-        href="https://m.duanqu.com?_ariver_appid=3000000003563313&_mp_code=tb&transition=present"
-        >asdasdsad</a
-      >
-    </div>
+    <img id="ball" src="https://js.cx/clipart/ball.svg" alt="" />    
+    <script>
+      const ball = document.querySelector("#ball");
+      ball.onmousedown = function (event) {
+        let shiftX = event.clientX - ball.getBoundingClientRect().left;
+        let shiftY = event.clientY - ball.getBoundingClientRect().top;
+        ball.style.position = "absolute";
+        ball.style.zIndex = 1000;
+        document.body.append(ball);
+        moveAt(event.pageX, event.pageY); // 移动现在位于坐标 (pageX, pageY) 上的球        // 将初始的偏移考虑在内
+        function moveAt(pageX, pageY) {
+          ball.style.left = pageX - shiftX + "px";
+          ball.style.top = pageY - shiftY + "px";
+        }
+        function onMouseMove(event) {
+          moveAt(event.pageX, event.pageY);
+        } // 在 mousemove 事件上移动球
+        document.addEventListener("mousemove", onMouseMove); // 放下球，并移除不需要的处理程序
+        ball.onmouseup = function () {
+          document.removeEventListener("mousemove", onMouseMove);
+          ball.onmouseup = null;
+        };
+      };
+      ball.ondragstart = function () {
+        return false;
+      };
+    </script>
   </body>
 </html>

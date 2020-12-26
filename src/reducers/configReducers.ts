@@ -1,3 +1,5 @@
+import produce from 'immer'
+
 let data = [
   {
     "id": "guan1_ka3_1",
@@ -477,11 +479,22 @@ let data = [
   }
 ]
 
+
+
 export function configData(state = data, action) {
   switch (action.type) {
     case 'CONFIG':
       return action.data
     default:
       return state
+  }
+}
+
+export function baseConfigData(state = data, action) {
+  switch (action.type) {
+    case 'BASE':
+      return action.data
+    default:
+      return produce(data, draft => draft)
   }
 }

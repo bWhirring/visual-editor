@@ -5,8 +5,7 @@ import { useImmer } from "use-immer";
 import { setLayerData } from "@actions/layerAction";
 import { setConfig } from "@actions/configAction";
 import style from "./index.less";
-import { isNotNullObject, layerNameToPinyin, toTree } from "../../utils";
-import produce from "immer";
+import { isNotNullObject, layerNameToPinyin, toTree } from "@utils";
 
 export default function Main(WrappedComponent) {
   return function () {
@@ -16,7 +15,8 @@ export default function Main(WrappedComponent) {
     let [currentLayer, setCurrentLayer] = useState({});
     let nodes = toTree(JSON.parse(JSON.stringify(configData)));
 
-    const selectChild = (id) => {
+    const selectChild = (e: React.SyntheticEvent<HTMLElement>, id) => {
+      e.stopPropagation();
       let idx = 0;
       configData.forEach((config, i) => {
         if (config.id === id) {
@@ -41,7 +41,7 @@ export default function Main(WrappedComponent) {
           }
 
           return (
-            <div onClick={() => selectChild(child.id)} key={child.id}>
+            <div onClick={(e) => selectChild(e, child.id)} key={child.id}>
               {renderContainer(child)}
             </div>
           );

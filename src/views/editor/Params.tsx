@@ -5,6 +5,7 @@ import { Input, Row, Col, InputNumber, Space, Form, Button, Empty } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useImmer } from "use-immer";
 import { setConfig } from "@actions/configAction";
+import { setLayerData } from "@actions/layerAction";
 import { produce } from "immer";
 
 const FormItem = Form.Item;
@@ -27,7 +28,7 @@ function Params(props) {
     return () => {
       form.resetFields();
     };
-  }, [currentLayerData.id]);
+  }, [currentLayerData.id, left, top]);
 
   const debounced = useDebouncedCallback(
     // function
@@ -42,31 +43,38 @@ function Params(props) {
       configData.forEach((v, i) => {
         if (v.id === id) idx = i;
       });
-      let newConfigData = produce(configData, (draft) => {
+      let newCurrentLayerData = produce(currentLayerData, (draft) => {
         if (type === "value") {
-          draft[idx]["text"].value = val;
+          draft["text"].value = val;
         } else {
-          draft[idx][type] = val;
+          draft[type] = val;
         }
       });
+      let newConfigData = produce(configData, (draft) => {
+        draft[idx] = newCurrentLayerData;
+      });
 
+      dispatch(setLayerData(newCurrentLayerData));
       dispatch(setConfig(newConfigData));
     },
-    [id]
+    [id, left, top]
   );
 
-  const renderFromItem = useCallback((list: string[]) => {
-    return list.map((v) => (
-      <FormItem name={v} key={v}>
-        <Input
-          onChange={(e) => debounced.callback(e.target.value, v)}
-          addonBefore={
-            <span style={{ display: "inline-block", width: 60 }}>{v}</span>
-          }
-        />
-      </FormItem>
-    ));
-  }, []);
+  const renderFromItem = useCallback(
+    (list: string[]) => {
+      return list.map((v) => (
+        <FormItem name={v} key={v}>
+          <Input
+            onChange={(e) => debounced.callback(e.target.value, v)}
+            addonBefore={
+              <span style={{ display: "inline-block", width: 60 }}>{v}</span>
+            }
+          />
+        </FormItem>
+      ));
+    },
+    [left, top]
+  );
 
   let renderItemList: string[] = ["width", "height", "left", "top", "zIndex"];
   if (text?.value) renderItemList.push("value");
