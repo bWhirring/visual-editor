@@ -56,10 +56,10 @@ export default function Main(WrappedComponent) {
       if (type === "group" || name === "Backgro") return "";
       name = layerNameToPinyin(name);
       cssContent = {
-        width: `${width / f}rem`,
-        height: `${height / f}rem`,
-        top: `${top / f}rem`,
-        left: `${left / f}rem`,
+        width: `${width / 2}px`,
+        height: `${height / 2}px`,
+        top: `${top / 2}px`,
+        left: `${left / 2}px`,
         position: `absolute`,
         zIndex: `${zIndex}`,
       };
