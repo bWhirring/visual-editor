@@ -47,7 +47,6 @@ function SiderBar() {
     <div styleName="sider-bar">
       <Tree
         onSelect={selectTree}
-        showLine
         showIcon
         className="draggable-tree"
         treeData={nodes}

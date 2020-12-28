@@ -15,18 +15,6 @@ const { Header, Footer, Sider, Content } = Layout;
 const Index = (): React.FC => {
   let dispatch = useDispatch();
   let { currentLayerData } = useSelector((data) => data);
-  // useEffect(() => {
-  //   document.addEventListener(
-  //     "click",
-  //     () => {
-  //       // console.log(currentLayerData, "currentLayerDatacurrentLayerData");
-  //       if (currentLayerData.id) {
-  //         dispatch(setLayerData({}));
-  //       }
-  //     },
-  //     false
-  //   );
-  // }, [currentLayerData]);
 
   return (
     <>

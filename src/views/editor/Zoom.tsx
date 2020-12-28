@@ -36,10 +36,7 @@ function Zoom() {
         draft[idx].top = offsetTop * 2;
       });
 
-      let transformTop = zoom.style.transform.split(",")[1].split("px")[0];
-
       dispatch(setLayerData(newConfigData[idx]));
-
       dispatch(setConfig(newConfigData));
     },
     [client]

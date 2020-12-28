@@ -100,22 +100,6 @@ export default function Main(WrappedComponent) {
       }
     };
 
-    const getProperty = useCallback(
-      (name) => {
-        configData.forEach((v) => {
-          if (v.id === name) {
-            // dispatch(setLayerData(v));
-          }
-        });
-      },
-      [name]
-    );
-
-    const event = useCallback((e: React.SyntheticEvent) => {
-      let { name } = e.target.dataset;
-      getProperty(name);
-    }, []);
-
     let node = render(nodes);
 
     return <WrappedComponent node={node} />;
