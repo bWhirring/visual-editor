@@ -21,33 +21,36 @@ function Zoom() {
     };
   }, [currentLayerData]);
 
-  const handleStop = (e) => {
-    const target = document.querySelector("#target");
-    let offsetLeft = e.pageX - client.x - target.offsetLeft;
-    let offsetTop = e.pageY - client.y - target.offsetTop;
+  const handleStop = useCallback(
+    (e: React.DragEvent<HTMLElement>) => {
+      const target = document.querySelector("#target");
+      let offsetLeft = e.pageX - client.x - target.offsetLeft;
+      let offsetTop = e.pageY - client.y - target.offsetTop;
 
-    let idx = "";
-    configData.forEach((v, i) => {
-      if (v.id === id) idx = i;
-    });
-    let newConfigData = produce(configData, (draft) => {
-      draft[idx].left = offsetLeft * 2;
-      draft[idx].top = offsetTop * 2;
-    });
+      let idx = "";
+      configData.forEach((v, i) => {
+        if (v.id === id) idx = i;
+      });
+      let newConfigData = produce(configData, (draft) => {
+        draft[idx].left = offsetLeft * 2;
+        draft[idx].top = offsetTop * 2;
+      });
 
-    let transformTop = zoom.style.transform.split(",")[1].split("px")[0];
+      let transformTop = zoom.style.transform.split(",")[1].split("px")[0];
 
-    dispatch(setLayerData(newConfigData[idx]));
+      dispatch(setLayerData(newConfigData[idx]));
 
-    dispatch(setConfig(newConfigData));
-  };
+      dispatch(setConfig(newConfigData));
+    },
+    [client]
+  );
 
-  const dragStart = (e) => {
+  const dragStart = useCallback((e: React.DragEvent<HTMLElement>) => {
     setClient((draft) => {
       draft.x = e.clientX - zoom.getBoundingClientRect().left;
       draft.y = e.clientY - zoom.getBoundingClientRect().top;
     });
-  };
+  }, []);
 
   // const mouseMove = useCallback(() => {
   //   const zoo = document.querySelector("#zoom");

@@ -16,7 +16,6 @@ export default function Headers() {
         layer = v;
       }
     });
-    console.log(layer, "layerlayer");
     dispatch(setLayerData(layer));
     dispatch(setConfig(baseConfigData));
   }, [currentLayerData.id]);
